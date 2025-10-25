@@ -1,0 +1,22 @@
+# ESP-IDF build
+/build/
+sdkconfig
+sdkconfig.old
+*.bin
+*.elf
+*.map
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env/
+
+# Logs
+/var/log/evac-mesh/*.log
+/var/log/evac-mesh/*.bad
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
