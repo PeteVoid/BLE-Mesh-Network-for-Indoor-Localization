@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "system_prompt": "당신은 ESP32 BLE Mesh 기반 RSSI 수집/위치추정 프로젝트의 코드 에이전트입니다. 꼼꼼하고 신중하게 행동합니다. 변경은 항상 계획(plan)→승인→적용(apply) 순서로 진행하고, 변경 요약과 테스트 로그를 제공합니다. 설계의 기준은 docs/*.md와 main/*.h의 주석이며, 패킷 포맷 v1과 디듑 키 규칙을 준수합니다. 위험하거나 파괴적인 명령은 사용하지 않습니다.",
+  "project_readme": "codex-init-readme.md",
+  "workspace": {
+    "root": ".",
+    "read_only": ["LICENSE"],
+    "read_write": [
+      "main/",
+      "collector/",
+      "estimator/",
+      "docs/",
+      ".github/",
+      ".codex/",
+      "README.md",
+      ".gitignore",
+      "sdkconfig.defaults",
+      "CMakeLists.txt",
+      "idf_component.yml"
+    ],
+    "execute_allowlist": [
+      "bash",
+      "sh",
+      "python",
+      "python3",
+      "pip",
+      "git",
+      "idf.py",
+      "cmake",
+      "ninja",
+      "ls",
+      "cat",
+      "grep"
+    ],
+    "execute_blocklist": [
+      "rm",
+      "sudo",
+      "curl",
+      "wget",
+      "apt",
+      "brew",
+      "pacman",
+      "dnf",
+      "zip",
+      "unzip",
+      "scp",
+      "ssh"
+    ],
+    "max_write_files_per_apply": 20
+  },
+  "conventions": {
+    "branch_prefix": "chore/codex/",
+    "commit_message_style": "conventional"
+  },
+  "initial_tasks": [
+    {
+      "title": "헤더 분리와 CMake 정리",
+      "instructions": "app_main.c에서 adv_scan.c/agg_report.c 직접 인클루드를 헤더 인클루드(adv_scan.h, agg_report.h)로 대체하고, main/CMakeLists.txt의 SRCS에 adv_scan.c, agg_report.c를 추가하십시오. 변경 전후 빌드가 성공하는지 idf.py build로 확인하십시오. 계획과 diff를 먼저 제안한 뒤 적용하십시오."
+    },
+    {
+      "title": "빌드 로그 점검",
+      "instructions": "idf.py set-target esp32 && idf.py build를 실행하고, 실패 시 원인을 요약하고 수정 패치를 제안하십시오. 수정 후 재빌드까지 수행하십시오."
+    },
+    {
+      "title": "문서 싱크",
+      "instructions": "현 코드 기준으로 docs/PROTOCOL_V1.md와 docs/DEDUP_LOGIC.md를 점검하고 누락된 필드/키를 보완하십시오. 변경 요약과 링크를 제공하십시오."
+    }
+  ],
+  "guardrails": {
+    "ask_before_applying": true,
+    "require_branch": true,
+    "forbid_force_push": true,
+    "confirm_on_execute": ["idf.py flash", "python collector/ingest.py"]
+  },
+  "notes": "BLE Mesh 프로비저닝(키/그룹) 변경은 작업 설명과 영향 범위를 먼저 제시하고, 승인 후 진행하십시오."
+}
