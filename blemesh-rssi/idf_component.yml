@@ -1,6 +1,6 @@
 # blemesh-rssi/idf_component.yml
-version: "0.1.0"
-description: "BLE Mesh RSSI collection (ADV+Mesh) with CBOR uplink"
+version: "0.0.1"
+description: "BLE Mesh RSSI project skeleton"
 dependencies:
-  idf: ">=5.1"
-  tinycbor: "*"
+  idf:
+    version: ">=5.1"

@@ -1,10 +1,19 @@
-# blemesh-rssi/main/CMakeLists.txt
 idf_component_register(
-    SRCS
-        app_main.c
-        mesh_vendor.c
-        report_v1_cbor.c
-        util_stats.c
-    INCLUDE_DIRS "."
-    REQUIRES bt nvs_flash tinycbor
+  SRCS
+    app_main.c
+    util_stats.c
+    util_ringbuf.c
+    adv_scan.c
+    agg_report.c
+    mesh_vendor.c
+    report_v1.c
+    report_v1_cbor.c
+  INCLUDE_DIRS "."
+  REQUIRES
+    nvs_flash
+    esp_timer
+    esp_common
+    freertos
+    bt
+    esp_ble_mesh
 )

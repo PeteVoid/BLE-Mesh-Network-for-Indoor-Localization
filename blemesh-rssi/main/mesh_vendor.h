@@ -1,15 +1,15 @@
-// main/mesh_vendor.h
 #pragma once
+#include <stddef.h>
+#include <stdbool.h>
 #include <stdint.h>
-#include "report_v1.h"
+#include "proto_v1.h"
 
-#define VENDOR_COMPANY_ID    0x1234
-#define VENDOR_MODEL_ID      0x0001
+// 메시 초기화/키/모델/퍼브·섭
+Result mesh_init_and_start(node_id_t self_id, bool proxy, bool relay);
+Result mesh_keys_bind(uint8_t netkey_id, uint8_t appkey_id);
+Result model_bind_vendor(uint8_t appkey_id);
+Result pubsub_config(const char* model, uint16_t pub, const uint16_t* subs, size_t subs_len);
+Result gatt_proxy_set(bool enabled);
 
-// Vendor Opcodes
-#define VM_PING   0x01
-#define VM_REPORT 0x02
-#define VM_CTRL   0x03
-
-void mesh_init_and_start(node_id_t self_id, bool enable_proxy, bool enable_relay);
-bool mesh_publish_report(const uint8_t* cbor, uint16_t len);  // publish to G_REPORT group
+// REPORT publish (CBOR 페이로드)
+bool mesh_publish_report(const uint8_t* payload, uint16_t len);
